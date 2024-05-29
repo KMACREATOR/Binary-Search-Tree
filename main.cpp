@@ -112,6 +112,7 @@ private:
 
 public:
 	BSTree(): root(nullptr) {}
+	//коструктор из списка
 	BSTree(initializer_list<int> list): root(nullptr) {
 		for (int value : list) {
 			add_element(value);
@@ -124,6 +125,7 @@ public:
 	bool delete_element(int value) {
 		return delete_element(root, value);
 	}
+//поиск
 	bool find_element(int value) {
 		return find_element(root, value);
 	}
@@ -131,6 +133,7 @@ public:
 		print(root);
 		cout << endl;
 	}
+//метод сохранения в файл
 	bool save_to_file(const string& path) {
 		ofstream file(path);
 		if (file.is_open()) {
@@ -140,6 +143,7 @@ public:
 		}
 		return false;
 	}
+//метод загрузки из файла
 	bool load_from_file(const string& path) {
 		ifstream file(path);
 		if (file.is_open()) {
@@ -151,16 +155,38 @@ public:
 		}
 		return false;
 	}
-
+//деструктор
 	~BSTree() {
 		destroy(root);
 	}
 };
 
 int main() {
+    ifstream input("input.txt");
+    fstream output("output.txt");
 
-	initializer_list<int> list = { 5,2,4,1,3 };
-	BSTree tree(list);
+	initializer_list<int> list = {8, 3, 5, 6, 2};
+	BSTree t0(list);
+    t0.print();
+    cout << endl;
 
+	BSTree t1;
+	for (int i = 0; i < 20; ++i){
+        t1.add_element(i);
+	}
+    t1.print();
+    cout << endl;
+
+    BSTree t2;
+    t2.load_from_file("input.txt");
+    t2.print();
+    cout << endl;
+
+    BSTree t3;
+	for (int i = 0; i < 30; ++i) {
+		t3.add_element(1 + rand() % 100);
+	}
+    t3.print();
+    t3.save_to_file("output.txt");
 	return 0;
 }
